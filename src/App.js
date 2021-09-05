@@ -3,6 +3,7 @@ import './App.css';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Welcome from './components/Welcome'
+import About from './components/About'
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 
 
@@ -16,7 +17,8 @@ class App extends Component {
           <Navbar />
           <Home />
           <Welcome />
-        </Router> 
+          <About />
+          </Router> 
       </>
     );
   }

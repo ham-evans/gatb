@@ -12,6 +12,8 @@
     color: #000;
     text-align: center;
     width: 50vw;
+    overflow-x: visible;
+
 }
 
 .welcome__container h1 { 
@@ -45,6 +47,8 @@
 
 .welcome-linksWrapper { 
     padding-top: 10px;
+    overflow-x: visible;
+
 }
 .welcome-links {
     color: #000;
