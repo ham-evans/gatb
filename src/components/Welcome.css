@@ -43,6 +43,16 @@
     border-radius: 50px;
 }
 
+.welcome-linksWrapper { 
+    padding-top: 10px;
+}
+.welcome-links {
+    color: #000;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    font-size: 1.5rem;
+}
+
 @media screen and (max-width: 960px) {
     .welcome { 
         flex-direction: column;
@@ -51,6 +61,8 @@
 
     .welcome__container { 
         width: 90vw;
+        height: 100%;
+        overflow-x: visible;
     }
 
     .welcome__container h1 { 
@@ -70,5 +82,13 @@
         overflow-x: visible;
         width: 90vw;
         height: 30vh;
+    }
+
+    .welcome-linksWrapper { 
+        overflow-x: visible;
+    }
+
+    .welcome-links { 
+        height: 100%;
     }
 }
