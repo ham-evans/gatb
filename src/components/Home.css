@@ -1,0 +1,13 @@
+.homeBg { 
+    height: 90vh;
+    width: auto;
+    margin: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    object-fit: contain;
+}
+
+.homeBg h1 { 
+    margin: 0;
+}
