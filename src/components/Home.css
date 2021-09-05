@@ -1,11 +1,13 @@
 .homeBg { 
-    height: 90vh;
+    height: 94vh;
     width: auto;
     margin: 0;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     object-fit: contain;
+    z-index: -5;
+    position: relative;
 }
 
 .homeBg h1 { 

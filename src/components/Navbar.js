@@ -18,7 +18,7 @@ export default class Navbar extends Component {
 
   render () {
     return (
-      <nav className="navbar" id="#fullhome">
+      <nav className={this.state.isOpen ? "navbar active" : "navbar"} id="#fullhome">
         <div className="nav-container">
           <HashLink smooth to="#fullhome" className="nav-logo">
             GIRAFFES

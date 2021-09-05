@@ -4,11 +4,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     top: 0;
     z-index: 20;
-    position: fixed;
+    position: absolute;
     width: 100vw;
+    font-weight: 600;
   }
   
   .nav-container {
@@ -18,13 +19,17 @@
     width: 100%;
     height: 80px;
     max-width: 1500px;
+    
+  }
+
+  .nav-container ul {
+      margin: 0;
   }
   
   .nav-logo {
     color: #fff;
     align-items: center;
     margin-left: 50px;
-    margin-bottom: 20px;
     margin-right: auto;
     cursor: pointer;
     text-decoration: none;
@@ -58,7 +63,6 @@
   .nav-item {
     line-height: 40px;
     margin-right: 1rem;
-    margin-bottom: 10px;
   }
   
   .nav-item:after {
@@ -85,6 +89,12 @@
   }
   
   @media screen and (max-width: 960px) {
+    .navbar.active{ 
+        overflow-x: visible;
+        background: transparent;
+        transition: all 0.5s ease;
+    }
+
     .nav-logo { 
       font-size: 2.3rem;
       margin-left: 25px;
@@ -94,22 +104,24 @@
     .nav-menu {
       display: flex;
       flex-direction: column;
-      width: 100%;
       position: absolute;
-      top: -500%;
       opacity: 1;
       transition: all 0.5s ease;
-      margin-right: 0;
+      margin-right: auto;
+      transform: translate(0, -100%);
+      width: 100%;
     }
-  
+
     .nav-menu.active {
-      background: #000;
+      background: rgba(52,59,65,.5);
       padding-top: 80px;
       top: 0px;
       left: 0px;
       right: 0px;
       opacity: 1;
       transition: all 0.5s ease;
+      transform: translate(0);
+      width: auto;
     }
 
     .nav-item .active {
