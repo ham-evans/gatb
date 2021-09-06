@@ -6,7 +6,7 @@ import apollo21 from '../images/Apollo21.png'
 import squeebo from '../images/squeebo.png'
 import goldenx from '../images/goldenx.png'
 
-export default function Welcome () {
+export default function Team () {
     return (
         <div className="team" id="team">
             <div className="team__container">

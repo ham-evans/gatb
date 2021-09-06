@@ -6,6 +6,7 @@ import Welcome from './components/Welcome'
 import About from './components/About'
 import Roadmap from './components/Roadmap'
 import Team from './components/Team'
+import Info from './components/Info'
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 
 
@@ -22,6 +23,7 @@ class App extends Component {
           <About />
           <Roadmap />
           <Team />
+          <Info />
           </Router> 
       </>
     );
