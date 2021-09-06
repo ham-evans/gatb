@@ -10,9 +10,9 @@ import "./Footer.css";
 export default class Footer extends Component { 
   render () {
     return (
-      <nav className="footer" id="#fullhome">
+      <nav className="footer">
         <div className="footer-container">
-          <HashLink smooth to="#fullhome" className="footer-logo">
+          <HashLink smooth to="#home" className="footer-logo">
             <img className="footer__imgLogo" src={logo} alt="GATB Logo"/>
           </HashLink>
 

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'; 
-import bgGiraffe from '../images/bgGiraffe.png';
 import './Home.css'
 
 export default class Home extends Component { 

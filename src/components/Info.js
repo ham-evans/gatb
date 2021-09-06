@@ -35,7 +35,7 @@ export default function Info () {
                         File hosting: IPFS
                     </li>
                     <li>
-                        Smart contract: Coming soon!
+                        Smart contract: 0xccb754B5D99f41397B13bEc72e0015D7bb2aB63E
                     </li>
                 </ul>
             </div>
