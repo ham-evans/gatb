@@ -12,6 +12,17 @@
     font-weight: 600;
     overflow-x: hidden;
   }
+
+  .nav__imgLogo { 
+    border-radius: 50%;
+    height: auto;
+    width: 60px;
+    align-items: center;
+    margin-left: 80px;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 8px;
+  }
   
   .nav-container {
     display: flex;

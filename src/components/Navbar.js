@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDiscord, faTwitter } from '@fortawesome/free-brands-svg-icons'
 import { faTimes, faBars } from '@fortawesome/free-solid-svg-icons'
+import logo from '../images/logo.png'
 
 import "./Navbar.css";
 
@@ -21,7 +22,7 @@ export default class Navbar extends Component {
       <nav className={this.state.isOpen ? "navbar active" : "navbar"} id="#fullhome">
         <div className="nav-container">
           <HashLink smooth to="#fullhome" className="nav-logo">
-            GIRAFFES
+            <img className="nav__imgLogo" src={logo} />
           </HashLink>
 
           <ul className={this.state.isOpen ? "nav-menu active" : "nav-menu"}>

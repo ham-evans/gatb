@@ -3,7 +3,7 @@ import { HashLink } from "react-router-hash-link";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDiscord, faTwitter } from '@fortawesome/free-brands-svg-icons'
-import { faTimes, faBars } from '@fortawesome/free-solid-svg-icons'
+import logo from '../images/logo.png'
 
 import "./Footer.css";
 
@@ -13,7 +13,7 @@ export default class Footer extends Component {
       <nav className="footer" id="#fullhome">
         <div className="footer-container">
           <HashLink smooth to="#fullhome" className="footer-logo">
-            GIRAFFES
+            <img className="nav__imgLogo" src={logo} />
           </HashLink>
 
           <ul className="footer-menu">
