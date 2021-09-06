@@ -137,9 +137,12 @@
 }
 
 @media screen and (max-width: 700px) {
+    .about { 
+        padding-top: 0px;
+    }
     .about__imgContainer{ 
         padding: 0;
-        margin: 30px auto;
+        margin: 50px auto;
     }
 
     .about__container { 

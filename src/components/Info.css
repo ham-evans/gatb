@@ -83,4 +83,7 @@
     .info__imgContainer { 
         display: none;
     }
+    .contractAddy { 
+        font-size: 1rem;
+    }
 }
