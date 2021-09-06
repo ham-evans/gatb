@@ -16,12 +16,10 @@
   .nav__imgLogo { 
     border-radius: 50%;
     height: auto;
-    width: 60px;
+    width: 65px;
     align-items: center;
-    margin-left: 80px;
     cursor: pointer;
     text-decoration: none;
-    margin-top: 8px;
   }
   
   .nav-container {
@@ -49,6 +47,8 @@
     flex-grow: 1;
     max-width: 180px;
     z-index: 2;
+    margin-bottom: 0;
+    margin-top: 7px;
   }
 
   .nav-logo:hover{ 
@@ -156,6 +156,14 @@
       cursor: pointer;
       color: #fff;
       margin-bottom: 65px;
+    }
+  }
+
+  @media screen and (max-width: 960px) {
+    .nav-logo { 
+      margin-left: 10%;
+      margin-bottom: 0;
+      margin-top: 7px;
     }
   }
   

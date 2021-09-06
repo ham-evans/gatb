@@ -8,10 +8,10 @@ export default function Info () {
     return (
         <div className="info" id="info" style={{ backgroundImage: `url(${pattern})` }}>
             <div className="info__imgContainer">
-                <img className="info__imgIndividual" src={info} />
+                <img className="info__imgIndividual" src={info} alt="GATB Logo"/>
             </div>
             <div className="info__container"  >
-                <h1>Girrafe Bar Information</h1> 
+                <h1>GATB Information</h1> 
                 <ul>
                     <li>
                         Release date: To be announced

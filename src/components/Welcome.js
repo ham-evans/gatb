@@ -1,6 +1,6 @@
 import React from 'react';
 import "./Welcome.css";
-import placeholderG from '../images/placeholderGiraffe.png';
+import welcomeGif from '../images/GATB-website-gif.gif';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDiscord, faTwitter } from '@fortawesome/free-brands-svg-icons'
 import { Link } from "react-router-dom";
@@ -11,18 +11,18 @@ export default function Welcome () {
             <div className="welcome__container">
                 <h1>Welcome to Giraffes At The Bar</h1> 
                 <p>A vibrant NFT community set in the ever-expanding metaverse. Purchase a Giraffe NFT to gain access to exclusive perks! Drop coming soon!</p>
-                <button className="welcome__button"><a href="https://forms.gle/HbhPkp2sUf3NmKQCA" target="_blank" className="welcome__link">Sign up for the GATB presale here</a></button>
+                <button className="welcome__button"><a href="https://forms.gle/HbhPkp2sUf3NmKQCA" target="_blank" rel="noreferrer" className="welcome__link">Sign up for the GATB presale here</a></button>
                 <div className="welcome-linksWrapper">
-                    <Link className="welcome-links" to={{ pathname: "https://twitter.com/BOIDS_NFT" }} target="_blank" >
+                    <Link className="welcome-links" to={{ pathname: "https://twitter.com/BOIDS_NFT" }} target="_blank" rel="noreferrer">
                         <FontAwesomeIcon icon={faTwitter} />
                     </Link>
-                    <Link className="welcome-links" to={{ pathname: "https://discord.gg/XvWwuVdQ" }} target="_blank" >
+                    <Link className="welcome-links" to={{ pathname: "https://discord.gg/XvWwuVdQ" }} target="_blank" rel="noreferrer">
                         <FontAwesomeIcon icon={faDiscord} />
                     </Link>
                 </div>
             </div>
             <div className="welcome__imgContainer">
-                <img src={placeholderG} />
+                <img src={welcomeGif} alt="Giraffe Gif"/>
             </div>
         </div>
     

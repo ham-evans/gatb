@@ -16,24 +16,24 @@ export default function Team () {
             </div>
             <div className="team__imgContainer">
                 <div className="team__imgIndividual">
-                    <img src={gin} />
-                    <figcaption class="caption">Chaz (Gin Giraffe): Founder and Avid Gardener</figcaption>
+                    <img src={gin} alt="Developer Chaz" />
+                    <figcaption className="caption">Chaz (Gin Giraffe): Founder and Avid Gardener</figcaption>
                 </div>
                 <div className="team__imgIndividual">
-                    <img src={beer} />
-                    <figcaption class="caption">Tom (Beer Giraffe): Founder and Fruit Enthusiast/Stacker</figcaption>
+                    <img src={beer} alt="Developer Tom"/>
+                    <figcaption className="caption">Tom (Beer Giraffe): Founder and Fruit Enthusiast/Stacker</figcaption>
                 </div>
                 <div className="team__imgIndividual">
-                    <img src={goldenx} />
-                    <figcaption class="caption">GoldenX: Developer</figcaption>
+                    <img src={goldenx} alt="Developer GoldenX"/>
+                    <figcaption className="caption">GoldenX: Developer</figcaption>
                 </div>
                 <div className="team__imgIndividual">
-                    <img src={squeebo} />
-                    <figcaption class="caption">Squeebo: Developer and Geek</figcaption>
+                    <img src={squeebo} alt="Developer Squeebo"/>
+                    <figcaption className="caption">Squeebo: Developer and Geek</figcaption>
                 </div>
                 <div className="team__imgIndividual">
-                    <img src={apollo21} />
-                    <figcaption class="caption">Apollo 21: Web Developer and Astronaut</figcaption>
+                    <img src={apollo21} alt="Developer Apollo 21"/>
+                    <figcaption className="caption">Apollo 21: Web Developer and Astronaut</figcaption>
                 </div>
             </div>
         </div>

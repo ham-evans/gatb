@@ -51,7 +51,6 @@
     align-items: center;
     overflow-x: visible;
     position: relative;
-
 }
 
 .about__group { 
@@ -138,6 +137,15 @@
 }
 
 @media screen and (max-width: 700px) {
+    .about__imgContainer{ 
+        padding: 0;
+        margin: 30px auto;
+    }
+
+    .about__container { 
+        margin-top: 10px;
+    }
+
     .about__group { 
         padding-left: 6px;
     }

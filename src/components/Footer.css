@@ -16,12 +16,12 @@
   .footer__imgLogo { 
     border-radius: 50%;
     height: auto;
-    width: 60px;
+    width: 65px;
     align-items: center;
     margin-left: 80px;
     cursor: pointer;
     text-decoration: none;
-    margin-top: 5px;
+    margin-top: 15px;
   }
   
   .footer-container {
@@ -102,6 +102,11 @@
   }
   
   @media screen and (max-width: 960px) {
+    .footer { 
+      height: 100%;
+
+    }
+
     .footer-container { 
         padding-left: 10px;
         padding-right: 10px;
@@ -109,8 +114,8 @@
 
     .footer-logo { 
       font-size: 2.3rem;
-      margin-left: 29%;
-      margin-bottom: 15px;
+      margin-left: 19%;
+      margin-bottom: 0;
     }
 
     .footer-menu {

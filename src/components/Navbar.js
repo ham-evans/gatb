@@ -22,7 +22,7 @@ export default class Navbar extends Component {
       <nav className={this.state.isOpen ? "navbar active" : "navbar"} id="#fullhome">
         <div className="nav-container">
           <HashLink smooth to="#fullhome" className="nav-logo">
-            <img className="nav__imgLogo" src={logo} />
+            <img className="nav__imgLogo" src={logo} alt="GATB Logo"/>
           </HashLink>
 
           <ul className={this.state.isOpen ? "nav-menu active" : "nav-menu"}>

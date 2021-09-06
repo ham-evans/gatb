@@ -13,7 +13,7 @@ export default class Footer extends Component {
       <nav className="footer" id="#fullhome">
         <div className="footer-container">
           <HashLink smooth to="#fullhome" className="footer-logo">
-            <img className="nav__imgLogo" src={logo} />
+            <img className="footer__imgLogo" src={logo} alt="GATB Logo"/>
           </HashLink>
 
           <ul className="footer-menu">
