@@ -29,7 +29,7 @@ export default class Navbar extends Component {
             <li className="nav-item">
               <HashLink
                 smooth
-                to="#about"
+                to="#project"
                 className="nav-links"
               >
                 PROJECT
@@ -37,29 +37,29 @@ export default class Navbar extends Component {
             </li>
             <li className="nav-item">
               <HashLink
-                smooth 
-                to="#thealgorithm"
-                className="nav-links"
-              >
-                TEAM
-              </HashLink>
-            </li>
-            <li className="nav-item">
-              <HashLink
                 smooth
-                to="#diffboids"
+                to="#roadmap"
                 className="nav-links"
               >
                 ROADMAP
               </HashLink>
             </li>
             <li className="nav-item">
-              <Link className="nav-links" to={{ pathname: "https://twitter.com/BOIDS_NFT" }} target="_blank" >
+              <HashLink
+                smooth 
+                to="#team"
+                className="nav-links"
+              >
+                TEAM
+              </HashLink>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-links" to={{ pathname: "https://twitter.com/nftgiraffes" }} target="_blank" >
                 <FontAwesomeIcon icon={faTwitter} />
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-links" to={{ pathname: "https://discord.gg/XvWwuVdQ" }} target="_blank" >
+              <Link className="nav-links" to={{ pathname: "discord.gg/XVsUWU39cM" }} target="_blank" >
                 <FontAwesomeIcon icon={faDiscord} />
               </Link>
             </li>

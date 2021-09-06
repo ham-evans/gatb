@@ -3,7 +3,7 @@ import "./Roadmap.css"
 
 export default function Roadmap () { 
     return (
-        <div className="roadmap">
+        <div className="roadmap" id="roadmap">
             <div className="titleWrapper">
                 <h1>Giraffe Roadmap</h1>
             </div>

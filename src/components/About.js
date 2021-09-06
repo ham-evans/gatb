@@ -8,7 +8,7 @@ import pattern from '../images/pattern.png';
 
 export default function About () {
     return (
-        <div className="about" id="about" style={{ backgroundImage: `url(${pattern})` }}>
+        <div className="about" id="project" style={{ backgroundImage: `url(${pattern})` }}>
             <div className="about__imgContainer">
                 <div className="about__wrapper">
                     <div className="about__group" >
