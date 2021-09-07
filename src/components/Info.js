@@ -14,7 +14,10 @@ export default function Info () {
                 <h1>GATB Information</h1> 
                 <ul>
                     <li>
-                        Release date: To be announced
+                        Presale: Thursday 9th of September 6pm PT
+                    </li>
+                    <li>
+                        Main Drop: Sunday 12th of September 10am PT
                     </li>
                     <li>
                         Total number of Giraffe NFTs: 10,000
