@@ -23,7 +23,7 @@ export default class Footer extends Component {
               </Link>
             </li>
             <li className="footer-item">
-              <Link className="footer-links" to={{ pathname: "discord.gg/XVsUWU39cM" }} target="_blank" >
+              <Link className="footer-links" to={{ pathname: "https://discord.gg/XVsUWU39cM" }} target="_blank" >
                 <FontAwesomeIcon icon={faDiscord} />
               </Link>
             </li>
