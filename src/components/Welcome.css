@@ -14,7 +14,7 @@
     border: none;
     outline: none;
     border-radius: 15px;
-    background: #c69037;
+    background: #000;
     font-style: 1.5rem;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -22,7 +22,7 @@
 }
 
 .welcome__link { 
-    color: #000;
+    color: #fff;
     text-decoration: none;
     font-size: 1.1rem;
 }

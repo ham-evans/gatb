@@ -16,7 +16,7 @@ export default function Welcome () {
                     <Link className="welcome-links" to={{ pathname: "https://twitter.com/BOIDS_NFT" }} target="_blank" rel="noreferrer">
                         <FontAwesomeIcon icon={faTwitter} />
                     </Link>
-                    <Link className="welcome-links" to={{ pathname: "https://discord.gg/XvWwuVdQ" }} target="_blank" rel="noreferrer">
+                    <Link className="welcome-links" to={{ pathname: "https://discord.gg/32mr9hy6ZV" }} target="_blank" rel="noreferrer">
                         <FontAwesomeIcon icon={faDiscord} />
                     </Link>
                 </div>

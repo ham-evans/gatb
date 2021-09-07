@@ -59,7 +59,7 @@ export default class Navbar extends Component {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-links" to={{ pathname: "https://discord.gg/XVsUWU39cM" }} target="_blank" >
+              <Link className="nav-links" to={{ pathname: "https://discord.gg/32mr9hy6ZV" }} target="_blank" >
                 <FontAwesomeIcon icon={faDiscord} />
               </Link>
             </li>
