@@ -13,7 +13,7 @@ export default function Welcome () {
                 <p>A vibrant NFT community set in the ever-expanding metaverse. Purchase a Giraffe NFT to gain access to exclusive perks! Drop coming soon!</p>
                 <button className="welcome__button"><a href="https://forms.gle/HbhPkp2sUf3NmKQCA" target="_blank" rel="noreferrer" className="welcome__link">Sign up for the GATB presale here</a></button>
                 <div className="welcome-linksWrapper">
-                    <Link className="welcome-links" to={{ pathname: "https://twitter.com/BOIDS_NFT" }} target="_blank" rel="noreferrer">
+                    <Link className="welcome-links" to={{ pathname: "https://twitter.com/nftgiraffes" }} target="_blank" rel="noreferrer">
                         <FontAwesomeIcon icon={faTwitter} />
                     </Link>
                     <Link className="welcome-links" to={{ pathname: "https://discord.gg/32mr9hy6ZV" }} target="_blank" rel="noreferrer">
