@@ -14,10 +14,10 @@
 .minthome__container { 
     background-color: rgba(52,59,65,.8);
     position: absolute;
-    right: 10vw;
-    top: 32vh;
-    width: 500px;
-    height: 40vh;
+    right: 4vw;
+    top: 26vh;
+    width: 670px;
+    height: 50vh;
     border-radius: 20px;
     align-items: center;
     justify-content: center;
@@ -26,7 +26,6 @@
     background-repeat: no-repeat;
     background-size: cover;
     color: #f3d48c;
-    overflow-y: hidden;
 }
 
 .minthome__info { 
@@ -39,25 +38,30 @@
 
 .minthome__info p { 
     font-size: 1.3rem;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 30px;
 }
 
 .minthome__signIn button { 
     cursor:pointer;
     padding: 10px 20px;
     height: 70px;
-    width: 340px;
+    width: 400px;
     border: none;
     outline: none;
     border-radius: 15px;
     background:#f3d48c;
     font-style: 1.5rem;
     margin-top: 10px;
+    margin-bottom: 30px;
     transition: all 0.35s;
     color: #956343;
     font-size: 1.2rem;
     font-family: 'Dosis', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-weight: bold;
 }
 
 .minthome__signIn button:hover {
@@ -65,8 +69,8 @@
     cursor: pointer; 
 }
 
-.minthome__container input { 
-    width: 50%;
+.minthome__signIn-input input { 
+    width: 40%;
     background-color: #f3d48c;
     color: #956343;
     border-radius: 10px;
@@ -79,6 +83,24 @@
     font-family: 'Dosis', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-weight: bold;
+}
+
+.minthome__signIn-input-false input { 
+    width: 40%;
+    background-color: rgba(243,212,140,0.5);
+    color: #956343;
+    border-radius: 10px;
+    text-align: center;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    outline-width: 0;
+    border: 0px solid;
+    font-size: 1.2rem;
+    font-family: 'Dosis', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: bold;
 }
 
 input[type=number]::-webkit-inner-spin-button, 
@@ -89,14 +111,13 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .minthome__mint button { 
-    cursor:pointer;
     padding: 0px 20px;
     height: 50px;
-    width: 340px;
+    width: 400px;
     border: none;
     outline: none;
     border-radius: 15px;
-    background:#f3d48c;
+    background:rgba(243,212,140,1);
     font-style: 1.5rem;
     margin-top: 20px;
     margin-bottom: 10px;
@@ -106,11 +127,32 @@ input[type=number]::-webkit-outer-spin-button {
     font-family: 'Dosis', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-weight: bold;
 }
 
 .minthome__mint button:hover {
     transform: scale(1.1);
     cursor: pointer; 
+}
+
+.minthome__mint-false button { 
+    padding: 0px 20px;
+    height: 50px;
+    width: 400px;
+    border: none;
+    outline: none;
+    border-radius: 15px;
+    background: rgba(243,212,140,0.5);
+    font-style: 1.5rem;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    transition: all 0.35s;
+    color: #956343;
+    font-size: 1.3rem;
+    font-family: 'Dosis', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: bold;
 }
 
 @media screen and (max-width: 675px) {
@@ -130,6 +172,10 @@ input[type=number]::-webkit-outer-spin-button {
     }
 
     .minthome__mint button { 
+        width: 80%;
+    }
+
+    .minthome__mint-false button {
         width: 80%;
     }
 }

@@ -20,7 +20,7 @@ export default function MintHome () {
     const [modalShown, toggleModal] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
-    const giraffeAddress = "0x04fDD29676A4bD63738EBaB7c13d893a86dD9b34";
+    const giraffeAddress = "0xccb754b5d99f41397b13bec72e0015d7bb2ab63e";
 
     useEffect( () => { 
         signIn()
@@ -114,11 +114,7 @@ export default function MintHome () {
                 setErrorMessage("Sale is not active yet.  Try again later!")
                 toggleModal(true);
             }
-        
-        } else {
-            setErrorMessage("Wallet not connected! Connect to mint a Giraffe.")
-            toggleModal(true);
-        }
+        } 
     }
 
     const setMintingSuccess = (howManyGiraffes) => {
@@ -155,18 +151,21 @@ export default function MintHome () {
                     </div>
                     
                     <p>{paraText}</p>
-
-                    <input 
-                        type="number" 
-                        min="1"
-                        max={presaleMintMax}
-                        value={howManyGiraffes}
-                        onChange={ e => checkHowMany(e.target.value) }
-                        name="" 
-                    />
+                    
+                    <div className={signedIn ? "minthome__signIn-input" : "minthome__signIn-input-false"}>
+                        <input 
+                            type="number" 
+                            min="1"
+                            max={presaleMintMax}
+                            value={howManyGiraffes}
+                            onChange={ e => checkHowMany(e.target.value) }
+                            name="" 
+                        />
+                    </div>
+                    
                     <br/>
-
-                    <div className="minthome__mint">
+                    
+                    <div className={signedIn ? "minthome__mint" : "minthome__mint-false"}>
                         {howManyGiraffes > 0 ? <button onClick={() => mintGiraffe()}>MINT {howManyGiraffes} GIRAFFES!</button>
                             : <button onClick={() => alert("Must mint atleast 1 Giraffe")}>MINT {howManyGiraffes} GIRAFFES!</button>
                         }
