@@ -1,0 +1,119 @@
+.minthomeBg { 
+    height: 94vh;
+    width: auto;
+    margin: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    object-fit: contain;
+    position: relative;
+    background-image: url("../images/bgGiraffeMint.png");
+    pointer-events: none;
+}
+
+.minthome__container { 
+    background-color: rgba(52,59,65,.8);
+    position: absolute;
+    right: 10vw;
+    top: 32vh;
+    width: 500px;
+    height: 40vh;
+    border-radius: 20px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #f3d48c;
+}
+
+.minthome__info { 
+    margin: 0;
+    position: relative;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.minthome__info p { 
+    font-size: 1.3rem;
+}
+
+.minthome__signIn button { 
+    cursor:pointer;
+    padding: 10px 20px;
+    height: 70px;
+    width: 340px;
+    border: none;
+    outline: none;
+    border-radius: 15px;
+    background:#f3d48c;
+    font-style: 1.5rem;
+    margin-top: 10px;
+    transition: all 0.35s;
+    color: #956343;
+    font-size: 1.2rem;
+    font-family: 'Dosis', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.minthome__signIn button:hover {
+    transform: scale(1.1);
+    cursor: pointer; 
+}
+
+.minthome__container input { 
+    width: 50%;
+    background-color: #f3d48c;
+    color: #956343;
+    border-radius: 10px;
+    text-align: center;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    outline-width: 0;
+    border: 0px solid;
+    font-size: 1.2rem;
+    font-family: 'Dosis', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {  
+    background-color: #000;
+    color: #956343;
+    opacity: 1;
+}
+
+.minthome__mint button { 
+    cursor:pointer;
+    padding: 0px 20px;
+    height: 50px;
+    width: 340px;
+    border: none;
+    outline: none;
+    border-radius: 15px;
+    background:#f3d48c;
+    font-style: 1.5rem;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    transition: all 0.35s;
+    color: #956343;
+    font-size: 1.3rem;
+    font-family: 'Dosis', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.minthome__mint button:hover {
+    transform: scale(1.1);
+    cursor: pointer; 
+}
+
+@media screen and (max-width: 675px) {
+    .minthomeBg { 
+        background-image: url("../images/bgGiraffeMobile.png");
+    }
+}

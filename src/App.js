@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
-import Home from './components/Home';
+import MintHome from './components/MintHome';
 import Welcome from './components/Welcome'
 import About from './components/About'
 import Roadmap from './components/Roadmap'
@@ -19,7 +19,7 @@ class App extends Component {
         <Router>
           <Switch />
           <Navbar />
-          <Home />
+          <MintHome />
           <Welcome />
           <About />
           <Roadmap />
