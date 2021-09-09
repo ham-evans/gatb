@@ -168,7 +168,6 @@ export default function MintHome () {
                 toggleModal(false);
                 }}
             ></Modal>
-            
         </div>
     );
 }
