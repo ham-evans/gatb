@@ -68,6 +68,7 @@
     padding: 0.5rem 1rem;
     height: 100%;
     border-bottom: 3px solid transparent;
+    overflow-y: hidden;
   }
   .fa-code {
     margin-left: 1rem;
@@ -76,6 +77,7 @@
   .footer-item {
     line-height: 40px;
     margin-right: 1rem;
+    overflow-y: hidden;
   }
   
   .footer-item:after {

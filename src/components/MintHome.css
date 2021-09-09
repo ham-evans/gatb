@@ -26,6 +26,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     color: #f3d48c;
+    overflow-y: hidden;
 }
 
 .minthome__info { 
@@ -115,5 +116,20 @@ input[type=number]::-webkit-outer-spin-button {
 @media screen and (max-width: 675px) {
     .minthomeBg { 
         background-image: url("../images/bgGiraffeMobile.png");
+    }
+
+    .minthome__container {
+        right: 5vw;
+        top: 20vh;
+        width: 90vw;
+        height: 60vh;
+    }
+
+    .minthome__signIn button {
+        width: 80%;
+    }
+
+    .minthome__mint button { 
+        width: 80%;
     }
 }

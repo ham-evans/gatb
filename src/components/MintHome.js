@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import './MintHome.css';
 import Giraffe from '../artifacts/contracts/GiraffesAtTheBar.sol/GiraffesAtTheBar.json';
 import { ethers } from 'ethers';
-import pattern from '../images/pattern.png';
 import Modal from './Modal.js';
 
 export default function MintHome () { 
@@ -47,17 +46,20 @@ export default function MintHome () {
                 })
                 .catch(function (error) {
                     if (error.code === 4001) {
-                        alert("Sign in to Mint a Giraffe!");
+                        setErrorMessage("Sign in to mint Giraffes!")
+                        toggleModal(true);
                     } else { 
-                        console.error(error)
+                        setErrorMessage(error)
+                        toggleModal(true);
                     }
                 })
             } else { 
-                setSignedIn(false)
-                alert("Switch network to Ethereum Network before continuing.")
+                setErrorMessage("Switch network to Ethereum Network before continuing.")
+                toggleModal(true);
             }
         } else {
-            alert("No Ethereum interface injected into browser. Read-only access.");
+            setErrorMessage("No Ethereum interface injected into browser. Read-only access.")
+            toggleModal(true);
         }
     }
 
@@ -92,31 +94,41 @@ export default function MintHome () {
                     from: walletAddress, 
                     value: price,
                 }
-
-                try {
-                    const txHash = await giraffeWithSigner.mint(howManyGiraffes, overrides);
-                    setMintingSuccess(txHash);
-                } catch (error) {
-                    setMintingError(error);
-                }
+                
+                await giraffeWithSigner.mint(howManyGiraffes, overrides)
+                .then(() => {
+                    setMintingSuccess(howManyGiraffes)
+                })
+                .catch ((error) => {
+                    if (error.error) {
+                        if (error.error.message === "execution reverted: Wallet is not whitelisted") {
+                            console.log("here")
+                            setMintingError("Wallet is not approved for presale.  Change wallets or come back during the sale to mint a Giraffe!")
+                        } else { 
+                            setMintingError(error.error.message)
+                        }
+                    } 
+                })
 
             } else {
-                alert("Sale is not active yet.  Try again later!");
+                setErrorMessage("Sale is not active yet.  Try again later!")
+                toggleModal(true);
             }
         
         } else {
-            alert("Wallet not connected! Connect to mint a Giraffe.");
+            setErrorMessage("Wallet not connected! Connect to mint a Giraffe.")
+            toggleModal(true);
         }
     }
 
-    const setMintingSuccess = (txHash) => {
-        //THROW MODAL WITH LINK
-        console.log(txHash);
+    const setMintingSuccess = (howManyGiraffes) => {
+        setErrorMessage("Congrats on minting " + howManyGiraffes + " Giraffes!!");
+        toggleModal(true);
     }
 
     const setMintingError = (error) => {
-        // Throw modal with error
-        console.log(error);
+        setErrorMessage(error);
+        toggleModal(true);
     }
 
     function checkHowMany (newNumber) { 
@@ -129,7 +141,7 @@ export default function MintHome () {
         }
     }
 
-    const paraText = signedIn ? "Input number of Giraffes to mint: " : "Sign in above to mint Giraffes!"
+    const paraText = signedIn ? "Input number of Giraffes to mint (max 10): " : "Sign in above to mint Giraffes!"
 
     return (
         <div id="#home">
@@ -167,6 +179,7 @@ export default function MintHome () {
                 close={() => {
                 toggleModal(false);
                 }}
+                message={errorMessage}
             ></Modal>
         </div>
     );
