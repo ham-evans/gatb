@@ -23,7 +23,7 @@ export default function MintHome () {
     const giraffeAddress = "0xccb754b5d99f41397b13bec72e0015d7bb2ab63e";
 
     useEffect( () => { 
-        signIn()
+        //signIn()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -31,8 +31,7 @@ export default function MintHome () {
         if (typeof window.ethereum !== 'undefined') {
             window.ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
             const network = await window.ethersProvider.getNetwork();
-            //CHANGE TO 1 ON SENDING LIVE 
-            if (network.chainId === 4){
+            if (network.chainId === 1){
                 await window.ethereum.request({ method: 'eth_requestAccounts' })
                 .then(async function (accounts) {
                     if (accounts.length > 0) {
@@ -54,7 +53,7 @@ export default function MintHome () {
                     }
                 })
             } else { 
-                setErrorMessage("Switch network to Ethereum Network before continuing.")
+                setErrorMessage("Switch network to the Ethereum Mainnet before continuing.")
                 toggleModal(true);
             }
         } else {
@@ -137,22 +136,23 @@ export default function MintHome () {
         }
     }
 
-    const paraText = signedIn ? "Input number of Giraffes to mint (max 10): " : "Sign in above to mint Giraffes!"
+    //const paraText = signedIn ? "Input number of Giraffes to mint (max 10): " : "Sign in above to mint Giraffes!"
+    const paraText = "GIRAFFES PRESALE CLOSED!"
 
     return (
         <div id="#home">
             <div className="minthomeBg" />
             <div className="minthome__container">
                 <div className="minthome__info">
-                    <div className="minthome__signIn">
-                        {!signedIn ? <button onClick={signIn}>Connect Wallet</button>
+                    <div className="minthome__signIn-false">
+                        {!signedIn ? <button>Connect Wallet</button>
                             : <button onClick={signOut}>Wallet Connected<br />Click to sign out</button>
                         }
                     </div>
                     
                     <p>{paraText}</p>
                     
-                    <div className={signedIn ? "minthome__signIn-input" : "minthome__signIn-input-false"}>
+                    <div className="minthome__signIn-input-false">
                         <input 
                             type="number" 
                             min="1"
@@ -165,7 +165,7 @@ export default function MintHome () {
                     
                     <br/>
                     
-                    <div className={signedIn ? "minthome__mint" : "minthome__mint-false"}>
+                    <div className="minthome__mint-false">
                         {howManyGiraffes > 0 ? <button onClick={() => mintGiraffe()}>MINT {howManyGiraffes} GIRAFFES!</button>
                             : <button onClick={() => alert("Must mint atleast 1 Giraffe")}>MINT {howManyGiraffes} GIRAFFES!</button>
                         }
