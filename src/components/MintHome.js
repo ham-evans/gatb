@@ -1,10 +1,54 @@
-import React, { useEffect, useState } from 'react';
+
+import React, { useEffect, useMemo, useState } from 'react';
+import { useWeb3React } from '@web3-react/core';
+import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
+import { WalletLinkConnector }    from "@web3-react/walletlink-connector";
+
 import './MintHome.css';
 import Giraffe from '../artifacts/contracts/GiraffesAtTheBar.sol/GiraffesAtTheBar.json';
 import { ethers } from 'ethers';
 import Modal from './Modal.js';
 
-export default function MintHome () { 
+import EthereumSession from '../lib/eth-session.js';
+
+
+//mainnet
+//const giraffeAddress = "0xccb754b5d99f41397b13bec72e0015d7bb2ab63e";
+
+//rinkeby
+const giraffeAddress = "0xA573Abb938f8B17D26C47525efD80690606DFF67";
+
+const mainnetConfig = {
+    'CONTRACT': '0xccb754b5d99f41397b13bec72e0015d7bb2ab63e',
+    'CHAIN_ID':  1,
+    'RPC_URL':   'https://mainnet.infura.io/v3/e08f25d6cba1481a8ea2cd2eb30fd267',
+    'ABI':       Giraffe.abi
+}
+
+const rinkebyConfig = {
+    'CONTRACT': '0xA573Abb938f8B17D26C47525efD80690606DFF67',
+    'CHAIN_ID':  4,
+    'RPC_URL':   'https://rinkeby.infura.io/v3/e08f25d6cba1481a8ea2cd2eb30fd267',
+    'ABI':       Giraffe.abi
+}
+
+const config = rinkebyConfig;
+
+const CONNECTORS = {};
+CONNECTORS.Walletlink = new WalletLinkConnector({
+    url: config.RPC_URL,
+    appLogoUrl: null,
+    appName: "Giraffes At The Bar",
+});
+
+CONNECTORS.WalletConnect = new WalletConnectConnector({
+    supportedChainIds: [config.CHAIN_ID],
+    rpc: config.RPC_URL,
+});
+
+export default function MintHome () {
+    const context = useWeb3React();
+
     const [signedIn, setSignedIn] = useState(false);
     const [walletAddress, setWalletAddress] = useState(null);
     const [giraffeContract, setGiraffeContract] = useState(null);
@@ -20,18 +64,56 @@ export default function MintHome () {
     const [modalShown, toggleModal] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
-    const giraffeAddress = "0xccb754b5d99f41397b13bec72e0015d7bb2ab63e";
-
     useEffect( () => { 
-        //signIn()
+        //signIn();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    const ethereumSession = useMemo(() => {
+        if( window.ethereum ){
+            const session = new EthereumSession({
+                chain:           EthereumSession.COMMON_CHAINS[ config.CHAIN_ID ],
+                contractAddress: config.CONTRACT,
+                contractABI:     config.ABI
+            });
+            //session.connectEthers();
+            return session;
+        }
+        else{
+            return null;
+        }
+    },[]);
+
+    async function connectProvider( connector ){
+        context.activate( connector, async (err) => {
+          //other connectors
+          if( err.code === 4001 ){
+            //WalletLink: User denied account authorization
+            console.debug( err.message );
+            return;
+          }
+          else if( err.name === 'UserRejectedRequestError' ){
+            //WalletConnect: The user rejected the request
+            console.debug( err.message );
+            return;
+          }
+          else{
+            console.warn( err.message );
+          }
+        });
+    }
+    
 
     async function signIn() { 
         if (typeof window.ethereum !== 'undefined') {
             window.ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
-            const network = await window.ethersProvider.getNetwork();
-            if (network.chainId === 1){
+            //const network = await window.ethersProvider.getNetwork();
+            //if (network.chainId === config.CHAIN_ID){
+            const isConnected = await ethereumSession.connectChain( true );
+            if( isConnected ){
+                //if( await ethereumSession.connectAccounts( true ) ){
+                //    ethereumSession.wallet.accounts;
+                //}
                 await window.ethereum.request({ method: 'eth_requestAccounts' })
                 .then(async function (accounts) {
                     if (accounts.length > 0) {
@@ -52,12 +134,19 @@ export default function MintHome () {
                         toggleModal(true);
                     }
                 })
-            } else { 
-                setErrorMessage("Switch network to the Ethereum Mainnet before continuing.")
+            } else {
+                const chain = EthereumSession.getChain( config.CHAIN_ID )
+                setErrorMessage( `Switch network to the ${chain.name} before continuing.`)
                 toggleModal(true);
             }
         } else {
-            setErrorMessage("No Ethereum interface injected into browser. Read-only access.")
+            setErrorMessage(<div style={{margin: 0, padding: 0}}>
+                <p>No Ethereum interface injected into browser.<br />Other providers:</p>
+                <ul>
+                    <li style={{ cursor: 'pointer' }} onClick={() => connectProvider( CONNECTORS.Walletlink )}>Coinbase Wallet</li>
+                    <li style={{ cursor: 'pointer' }} onClick={() => connectProvider( CONNECTORS.WalletConnect )}>WalletConnect</li>
+                </ul>
+            </div>)
             toggleModal(true);
         }
     }
@@ -139,13 +228,15 @@ export default function MintHome () {
     //const paraText = signedIn ? "Input number of Giraffes to mint (max 10): " : "Sign in above to mint Giraffes!"
     const paraText = "GIRAFFES PRESALE CLOSED!"
 
+
+
     return (
         <div id="#home">
             <div className="minthomeBg" />
             <div className="minthome__container">
                 <div className="minthome__info">
                     <div className="minthome__signIn-false">
-                        {!signedIn ? <button>Connect Wallet</button>
+                        {!signedIn ? <button onClick={signIn}>Connect Wallet</button>
                             : <button onClick={signOut}>Wallet Connected<br />Click to sign out</button>
                         }
                     </div>
@@ -176,7 +267,7 @@ export default function MintHome () {
             <Modal
                 shown={modalShown}
                 close={() => {
-                toggleModal(false);
+                    toggleModal(false);
                 }}
                 message={errorMessage}
             ></Modal>
