@@ -16,7 +16,7 @@ import EthereumSession from '../lib/eth-session.js';
 //const giraffeAddress = "0xccb754b5d99f41397b13bec72e0015d7bb2ab63e";
 
 //rinkeby
-const giraffeAddress = "0xA573Abb938f8B17D26C47525efD80690606DFF67";
+const giraffeAddress = "0x3f2a3678F8b818dA8888F1dF0c4FE7d5C3AA5dc5";
 
 const mainnetConfig = {
     'CONTRACT': '0xccb754b5d99f41397b13bec72e0015d7bb2ab63e',
@@ -26,7 +26,7 @@ const mainnetConfig = {
 }
 
 const rinkebyConfig = {
-    'CONTRACT': '0xA573Abb938f8B17D26C47525efD80690606DFF67',
+    'CONTRACT': '0x3f2a3678F8b818dA8888F1dF0c4FE7d5C3AA5dc5',
     'CHAIN_ID':  4,
     'RPC_URL':   'https://rinkeby.infura.io/v3/e08f25d6cba1481a8ea2cd2eb30fd267',
     'ABI':       Giraffe.abi
@@ -239,7 +239,7 @@ export default function MintHome () {
                 <div className="minthome__info">
                     <div className="minthome__signIn"> 
                         {!signedIn ? <button onClick={signIn}>Connect Wallet</button>
-                            : <button onClick={signOut}>Wallet Connected<br />Click to sign out</button>
+                            : <button onClick={signOut}>Wallet Connected<br /> Click to sign out</button>
                         }
                     </div>
                     

@@ -75,7 +75,7 @@ contract GiraffesAtTheBar is ERC721Enumerable, Ownable, PaymentSplitter {
     uint public presale_wallet_max = 10000;
 
     uint public sale_mint_max      = 20;
-    uint public sale_start         = 1640415600;
+    uint public sale_start         = 1631837616;
     uint public sale_wallet_max    = 10000;
 
     string private _baseTokenURI = 'http://giraffesatthebar.com/metadata.php?tokenID=';
