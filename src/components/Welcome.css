@@ -19,6 +19,7 @@
     margin-top: 10px;
     margin-bottom: 10px;
     transition: all 0.35s;
+    font-family: 'Dosis', sans-serif;
 }
 
 .welcome__link { 

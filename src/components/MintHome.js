@@ -56,9 +56,8 @@ export default function MintHome () {
     const [paused, togglePause] = useState(true);
     const [totalMinted, setTotalMinted] = useState(0);
     const [giraffePrice, setGiraffePrice] = useState(0);
-    const [howManyGiraffes, setHowManyGiraffes] = useState(10)
+    const [howManyGiraffes, setHowManyGiraffes] = useState(20)
 
-    const presaleMintMax = 10;
     const saleMintMax = 20;
     
     const [modalShown, toggleModal] = useState(false);
@@ -109,36 +108,43 @@ export default function MintHome () {
             window.ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
             //const network = await window.ethersProvider.getNetwork();
             //if (network.chainId === config.CHAIN_ID){
-            const isConnected = await ethereumSession.connectChain( true );
-            if( isConnected ){
-                //if( await ethereumSession.connectAccounts( true ) ){
-                //    ethereumSession.wallet.accounts;
-                //}
-                await window.ethereum.request({ method: 'eth_requestAccounts' })
-                .then(async function (accounts) {
-                    if (accounts.length > 0) {
-                        let wallet = accounts[0]
-                        setWalletAddress(wallet)
-                        setSignedIn(true)
-                        loadContractData()
-                    } else {
-                        setSignedIn(false)
-                    }
-                })
-                .catch(function (error) {
-                    if (error.code === 4001) {
-                        setErrorMessage("Sign in to mint Giraffes!")
-                        toggleModal(true);
-                    } else { 
-                        setErrorMessage(error)
-                        toggleModal(true);
-                    }
-                })
-            } else {
-                const chain = EthereumSession.getChain( config.CHAIN_ID )
-                setErrorMessage( `Switch network to the ${chain.name} before continuing.`)
+
+            const isConnected = await ethereumSession.connectChain( true )
+            .then(async function (isConnected) { 
+                if( isConnected ){
+                    //if( await ethereumSession.connectAccounts( true ) ){
+                    //    ethereumSession.wallet.accounts;
+                    //}
+                    await window.ethereum.request({ method: 'eth_requestAccounts' })
+                    .then(async function (accounts) {
+                        if (accounts.length > 0) {
+                            let wallet = accounts[0]
+                            setWalletAddress(wallet)
+                            setSignedIn(true)
+                            loadContractData()
+                        } else {
+                            setSignedIn(false)
+                        }
+                    })
+                    .catch(function (error) {
+                        if (error.code === 4001) {
+                            setErrorMessage("Sign in to mint Giraffes!")
+                            toggleModal(true);
+                        } else { 
+                            setErrorMessage(error)
+                            toggleModal(true);
+                        }
+                    })
+                } else {
+                    const chain = EthereumSession.getChain( config.CHAIN_ID )
+                    setErrorMessage( `Switch network to the ${chain.name} before continuing.`)
+                    toggleModal(true);
+                }
+            })
+            .catch(function (error) { 
+                setErrorMessage( error )
                 toggleModal(true);
-            }
+            })
         } else {
             setErrorMessage(<div style={{margin: 0, padding: 0}}>
                 <p>No Ethereum interface injected into browser.<br />Other providers:</p>
@@ -197,7 +203,6 @@ export default function MintHome () {
                         }
                     } 
                 })
-
             } else {
                 setErrorMessage("Sale is not active yet.  Try again later!")
                 toggleModal(true);
@@ -216,8 +221,8 @@ export default function MintHome () {
     }
 
     function checkHowMany (newNumber) { 
-        if (newNumber > 10) {
-            setHowManyGiraffes(10)
+        if (newNumber > 20) {
+            setHowManyGiraffes(20)
         } else if (newNumber < 1) { 
             setHowManyGiraffes("")
         } else { 
@@ -225,17 +230,14 @@ export default function MintHome () {
         }
     }
 
-    //const paraText = signedIn ? "Input number of Giraffes to mint (max 10): " : "Sign in above to mint Giraffes!"
-    const paraText = "GIRAFFES PRESALE CLOSED!"
-
-
+    const paraText = signedIn ? "Input number of Giraffes to mint (max 20): " : "Sign in above to mint Giraffes!"
 
     return (
         <div id="#home">
             <div className="minthomeBg" />
             <div className="minthome__container">
                 <div className="minthome__info">
-                    <div className="minthome__signIn-false">
+                    <div className="minthome__signIn"> 
                         {!signedIn ? <button onClick={signIn}>Connect Wallet</button>
                             : <button onClick={signOut}>Wallet Connected<br />Click to sign out</button>
                         }
@@ -243,11 +245,11 @@ export default function MintHome () {
                     
                     <p>{paraText}</p>
                     
-                    <div className="minthome__signIn-input-false">
+                    <div className={signedIn ? "minthome__signIn-input" : "minthome__signIn-input-false"}>
                         <input 
                             type="number" 
                             min="1"
-                            max={presaleMintMax}
+                            max={saleMintMax}
                             value={howManyGiraffes}
                             onChange={ e => checkHowMany(e.target.value) }
                             name="" 
@@ -256,7 +258,7 @@ export default function MintHome () {
                     
                     <br/>
                     
-                    <div className="minthome__mint-false">
+                    <div className={signedIn ? "minthome__mint" : "minthome__mint-false"}>
                         {howManyGiraffes > 0 ? <button onClick={() => mintGiraffe()}>MINT {howManyGiraffes} GIRAFFES!</button>
                             : <button onClick={() => alert("Must mint atleast 1 Giraffe")}>MINT {howManyGiraffes} GIRAFFES!</button>
                         }
