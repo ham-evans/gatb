@@ -46,27 +46,23 @@ CONNECTORS.WalletConnect = new WalletConnectConnector({
     rpc: config.RPC_URL,
 });
 
+const sleep = ms => new Promise(( resolve, reject ) => setTimeout( resolve, ms ));
+
 export default function MintHome () {
     const context = useWeb3React();
+    const saleMintMax = 20;
 
     const [signedIn, setSignedIn] = useState(false);
     const [walletAddress, setWalletAddress] = useState(null);
-    const [giraffeContract, setGiraffeContract] = useState(null);
+    let [giraffeContract, setGiraffeContract] = useState(null);
     const [giraffeWithSigner, setGiraffeWithSigner] = useState(null);
     const [paused, togglePause] = useState(true);
     const [totalMinted, setTotalMinted] = useState(0);
     const [giraffePrice, setGiraffePrice] = useState(0);
     const [howManyGiraffes, setHowManyGiraffes] = useState(20)
 
-    const saleMintMax = 20;
-    
     const [modalShown, toggleModal] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-
-    useEffect( () => { 
-        //signIn();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
     const ethereumSession = useMemo(() => {
         if( window.ethereum ){
@@ -82,6 +78,25 @@ export default function MintHome () {
             return null;
         }
     },[]);
+
+    useEffect(() => { 
+        if( window.ethereum ){
+            ethereumSession.connectEthers()
+                .then(() => loadContractData())
+                .then(() => {
+                    setSignedIn( true );
+                    setWalletAddress( ethereumSession.wallet.accounts[0] );
+                })
+                .catch( err => {
+                    if( err.code === "CALL_EXCEPTION" ){
+                        //we're on the wrong chain
+                    }
+                    else{
+                        debugger
+                    }
+                })
+        }
+    }, []);
 
     async function connectProvider( connector ){
         context.activate( connector, async (err) => {
@@ -103,48 +118,7 @@ export default function MintHome () {
     }
     
     async function signIn() { 
-        if (typeof window.ethereum !== 'undefined') {
-            window.ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
-            //const network = await window.ethersProvider.getNetwork();
-            //if (network.chainId === config.CHAIN_ID){
-
-            const isConnected = await ethereumSession.connectChain( true )
-            .then(async function (isConnected) { 
-                if( isConnected ){
-                    //if( await ethereumSession.connectAccounts( true ) ){
-                    //    ethereumSession.wallet.accounts;
-                    //}
-                    await window.ethereum.request({ method: 'eth_requestAccounts' })
-                    .then(async function (accounts) {
-                        if (accounts.length > 0) {
-                            let wallet = accounts[0]
-                            setWalletAddress(wallet)
-                            setSignedIn(true)
-                            loadContractData()
-                        } else {
-                            setSignedIn(false)
-                        }
-                    })
-                    .catch(function (error) {
-                        if (error.code === 4001) {
-                            setErrorMessage("Sign in to mint Giraffes!")
-                            toggleModal(true);
-                        } else { 
-                            setErrorMessage(error)
-                            toggleModal(true);
-                        }
-                    })
-                } else {
-                    const chain = EthereumSession.getChain( config.CHAIN_ID )
-                    setErrorMessage( `Switch network to the ${chain.name} before continuing.`)
-                    toggleModal(true);
-                }
-            })
-            .catch(function (error) { 
-                setErrorMessage( error )
-                toggleModal(true);
-            })
-        } else {
+        if ( !window.ethereum ) {
             setErrorMessage(<div style={{margin: 0, padding: 0}}>
                 <p>No Ethereum interface injected into browser.<br />Other providers:</p>
                 <ul>
@@ -153,6 +127,42 @@ export default function MintHome () {
                 </ul>
             </div>)
             toggleModal(true);
+            return;
+        }
+
+        try{
+            let curChain = await ethereumSession.getWalletChainID();
+            await ethereumSession.connectEthers( true );
+            if( curChain != ethereumSession.chain.hex ){
+                curChain = await ethereumSession.getWalletChainID();
+                if( curChain === ethereumSession.chain.hex ){
+                    //force the browser to switch to the new chain
+                    window.location.reload();
+                    return;
+                } else {
+                    setErrorMessage( `Switch network to the ${ethereumSession.chain.name} before continuing.`)
+                    toggleModal(true);
+                    return;
+                }
+            }
+
+            const accounts = ethereumSession.wallet.accounts;
+            if (accounts && accounts.length > 0) {
+                setWalletAddress(accounts[0])
+                setSignedIn(true)
+                await loadContractData()
+            } else {
+                setSignedIn(false)
+            }
+        }
+        catch( error ){
+            if (error.code === 4001) {
+                setErrorMessage("Sign in to mint Giraffes!")
+                toggleModal(true);
+            } else { 
+                setErrorMessage(error)
+                toggleModal(true);
+            }
         }
     }
 
@@ -160,53 +170,76 @@ export default function MintHome () {
         setSignedIn(false)
     }
 
-    async function loadContractData () { 
-        const giraffeContract = new ethers.Contract(giraffeAddress, Giraffe.abi, window.ethersProvider);
-        setGiraffeContract(giraffeContract);
+    async function loadContractData () {
+        if( !window.ethersProvider ){
+            window.ethersProvider = ethereumSession.ethersProvider;
+        }
+
+        if( !giraffeContract ){
+            giraffeContract = ethereumSession.contract;
+            if( !giraffeContract ){
+                setGiraffeContract(giraffeContract);
+            }
+        }
 
         const signer = window.ethersProvider.getSigner()
         const giraffeWithSigner = giraffeContract.connect(signer)
-        setGiraffeWithSigner(giraffeWithSigner);
-
         const salebool = await giraffeContract.paused();
-        togglePause(salebool);
-
         const totalMinted = String(await giraffeContract.totalSupply());
-        setTotalMinted(totalMinted);
-
         const giraffePrice = await giraffeContract.price();
+
+        setGiraffeWithSigner(giraffeWithSigner);
+        togglePause(salebool);
+        setTotalMinted(totalMinted);
         setGiraffePrice(giraffePrice);
     }
 
     async function mintGiraffe () { 
-        if (signedIn) {
-            if (!paused && giraffeWithSigner) {
-                const price = String(giraffePrice  * howManyGiraffes)
-                
-                let overrides = {
-                    from: walletAddress, 
-                    value: price,
+        if (!signedIn || !giraffeWithSigner){
+            //please connect first
+            return
+        }
+
+        if( paused ){
+            setErrorMessage("Sale is not active yet.  Try again later!")
+            toggleModal(true);
+            return;
+        }
+
+        if( !(await ethereumSession.connectAccounts( true )) ){
+            setErrorMessage("Please unlock your wallet and select an account.")
+            toggleModal(true);
+            return;
+        }
+
+
+        if( !(await ethereumSession.connectChain( true )) ){
+            setErrorMessage(`Please open your wallet and select ${ethereumSession.chain.name}.`);
+            toggleModal(true);
+            return;
+        }
+
+        //connected
+        const price = String(giraffePrice  * howManyGiraffes)
+        
+        let overrides = {
+            from: walletAddress, 
+            value: price,
+        }
+        
+        try{
+            await giraffeWithSigner.mint(howManyGiraffes, overrides)
+            setMintingSuccess(howManyGiraffes)
+        } catch (error) {
+            if (error.error) {
+                if (error.error.message === "execution reverted: Wallet is not whitelisted") {
+                    console.log("here")
+                    setMintingError("Wallet is not approved for presale.  Change wallets or come back during the sale to mint a Giraffe!")
+                } else { 
+                    setMintingError(error.error.message)
                 }
-                
-                await giraffeWithSigner.mint(howManyGiraffes, overrides)
-                .then(() => {
-                    setMintingSuccess(howManyGiraffes)
-                })
-                .catch ((error) => {
-                    if (error.error) {
-                        if (error.error.message === "execution reverted: Wallet is not whitelisted") {
-                            console.log("here")
-                            setMintingError("Wallet is not approved for presale.  Change wallets or come back during the sale to mint a Giraffe!")
-                        } else { 
-                            setMintingError(error.error.message)
-                        }
-                    } 
-                })
-            } else {
-                setErrorMessage("Sale is not active yet.  Try again later!")
-                toggleModal(true);
-            }
-        } 
+            } 
+        }
     }
 
     const setMintingSuccess = (howManyGiraffes) => {

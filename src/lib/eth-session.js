@@ -38,7 +38,7 @@ class EthereumSession{
     }
   }
 
-  async connectEthers(){
+  async connectEthers( deep ){
     let ethers;
     try{
       ethers = require( 'ethers' );
@@ -66,23 +66,23 @@ class EthereumSession{
     }
 
     if( !this.contract ){
-      const signer = this.ethersProvider.getSigner();
-      this.contract = new ethers.Contract( this.contractAddress, this.contractABI, signer );
+      //const signer = this.ethersProvider.getSigner();
+      this.contract = new ethers.Contract( this.contractAddress, this.contractABI, this.ethersProvider );
     }
 
     if( window.ethereum.isConnected() ){
-      if( subscribe )
-        this.subscribe();
+      //if( subscribe )
+      //  this.subscribe();
     }
     else{
       return false;
     }
 
 
-    if( !(await this.connectChain()) )
+    if( !(await this.connectChain( deep )) )
       return false;
 
-    if( !(await this.connectAccounts()) )
+    if( !(await this.connectAccounts( deep )) )
       return false;
 
     return true;
@@ -128,10 +128,10 @@ class EthereumSession{
     }
 
 
-    if( !(await this.connectChain()) )
+    if( !(await this.connectChain( deep )) )
       return false;
 
-    if( !(await this.connectAccounts()) )
+    if( !(await this.connectAccounts( deep )) )
       return false;
 
     return true;
