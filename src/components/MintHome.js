@@ -90,6 +90,7 @@ export default function MintHome () {
                 .catch( err => {
                     if( err.code === "CALL_EXCEPTION" ){
                         //we're on the wrong chain
+                        console.log("yup")
                     }
                     else{
                         debugger
@@ -196,7 +197,8 @@ export default function MintHome () {
 
     async function mintGiraffe () { 
         if (!signedIn || !giraffeWithSigner){
-            //please connect first
+            setErrorMessage("Please connect wallet or reload the page!")
+            toggleModal(true);
             return
         }
 
@@ -212,32 +214,38 @@ export default function MintHome () {
             return;
         }
 
-
         if( !(await ethereumSession.connectChain( true )) ){
             setErrorMessage(`Please open your wallet and select ${ethereumSession.chain.name}.`);
             toggleModal(true);
             return;
         }
 
+        if ( ethereumSession.chain.hex != await ethereumSession.getWalletChainID() ){
+            window.location.reload();
+            return;
+        }
+
         //connected
         const price = String(giraffePrice  * howManyGiraffes)
-        
+
+        console.log(await window.ethersProvider.getGasPrice())
+
         let overrides = {
             from: walletAddress, 
             value: price,
         }
-        
+
+        const gasEstimate = (await giraffeWithSigner.estimateGas.mint(howManyGiraffes, overrides)).toNumber()
+        const gasPrice = (await ethereumSession.ethersProvider.getGasPrice()).toNumber()
+
+        console.log(gasPrice * gasEstimate)
+
         try{
             await giraffeWithSigner.mint(howManyGiraffes, overrides)
             setMintingSuccess(howManyGiraffes)
         } catch (error) {
             if (error.error) {
-                if (error.error.message === "execution reverted: Wallet is not whitelisted") {
-                    console.log("here")
-                    setMintingError("Wallet is not approved for presale.  Change wallets or come back during the sale to mint a Giraffe!")
-                } else { 
-                    setMintingError(error.error.message)
-                }
+                setMintingError(error.error.message)
             } 
         }
     }
@@ -260,6 +268,11 @@ export default function MintHome () {
         } else { 
             setHowManyGiraffes(newNumber) 
         }
+    }
+
+    const mintOne = () => { 
+        setErrorMessage("Must mint atleast one Giraffe!")
+        toggleModal(true);
     }
 
     const paraText = signedIn ? "Input number of Giraffes to mint (max 20): " : "Sign in above to mint Giraffes!"
@@ -292,7 +305,7 @@ export default function MintHome () {
                     
                     <div className={signedIn ? "minthome__mint" : "minthome__mint-false"}>
                         {howManyGiraffes > 0 ? <button onClick={() => mintGiraffe()}>MINT {howManyGiraffes} GIRAFFES!</button>
-                            : <button onClick={() => alert("Must mint atleast 1 Giraffe")}>MINT {howManyGiraffes} GIRAFFES!</button>
+                            : <button onClick={() => mintOne()}>MINT {howManyGiraffes} GIRAFFES!</button>
                         }
                     </div>
                 </div>
