@@ -102,7 +102,6 @@ export default function MintHome () {
         });
     }
     
-
     async function signIn() { 
         if (typeof window.ethereum !== 'undefined') {
             window.ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
