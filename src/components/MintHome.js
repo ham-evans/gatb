@@ -12,12 +12,6 @@ import Modal from './Modal.js';
 import EthereumSession from '../lib/eth-session.js';
 
 
-//mainnet
-//const giraffeAddress = "0xccb754b5d99f41397b13bec72e0015d7bb2ab63e";
-
-//rinkeby
-const giraffeAddress = "0x3f2a3678F8b818dA8888F1dF0c4FE7d5C3AA5dc5";
-
 const mainnetConfig = {
     'CONTRACT': '0xccb754b5d99f41397b13bec72e0015d7bb2ab63e',
     'CHAIN_ID':  1,
@@ -25,14 +19,16 @@ const mainnetConfig = {
     'ABI':       Giraffe.abi
 }
 
+/*
 const rinkebyConfig = {
     'CONTRACT': '0x3f2a3678F8b818dA8888F1dF0c4FE7d5C3AA5dc5',
     'CHAIN_ID':  4,
     'RPC_URL':   'https://rinkeby.infura.io/v3/e08f25d6cba1481a8ea2cd2eb30fd267',
     'ABI':       Giraffe.abi
 }
+*/
 
-const config = rinkebyConfig;
+const config = mainnetConfig;
 
 const CONNECTORS = {};
 CONNECTORS.Walletlink = new WalletLinkConnector({
