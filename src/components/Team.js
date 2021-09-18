@@ -5,6 +5,8 @@ import beer from '../images/beer.png'
 import apollo21 from '../images/Apollo21.png'
 import squeebo from '../images/squeebo.png'
 import goldenx from '../images/goldenx.png'
+import bruno from '../images/bruno.png'
+import manu from '../images/manu.png'
 
 export default function Team () {
     return (
@@ -16,12 +18,20 @@ export default function Team () {
             </div>
             <div className="team__imgContainer">
                 <div className="team__imgIndividual">
+                    <img src={manu} alt="Developer Chaz" />
+                    <figcaption className="caption">Manu: Artist</figcaption>
+                </div>
+                <div className="team__imgIndividual">
+                    <img src={bruno} alt="Developer Chaz" />
+                    <figcaption className="caption">Bruno: Artist</figcaption>
+                </div>
+                <div className="team__imgIndividual">
                     <img src={gin} alt="Developer Chaz" />
                     <figcaption className="caption">Chaz (Gin Giraffe): Founder and Avid Gardener</figcaption>
                 </div>
                 <div className="team__imgIndividual">
                     <img src={beer} alt="Developer Tom"/>
-                    <figcaption className="caption">Tom (Beer Giraffe): Founder and Fruit Enthusiast/Stacker</figcaption>
+                    <figcaption className="caption">Tom (Beer Giraffe): Founder and Fruit Enthusiast</figcaption>
                 </div>
                 <div className="team__imgIndividual">
                     <img src={goldenx} alt="Developer GoldenX"/>
