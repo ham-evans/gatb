@@ -154,31 +154,31 @@ class EthereumSession{
   }
 
   async connectChain( deep ){
-    if( await this.isChainConnected() )
+    if( this.isChainConnected() )
       return true;
 
     const chainID = await this.getWalletChainID();
     this.wallet.chain = EthereumSession.getChain( chainID );
-    if( await this.isChainConnected() )
+    if( this.isChainConnected() )
       return true;
 
     if( deep ){
       if( await this.setChainID( this.chain.hex ) ){
         const chainID = await this.getWalletChainID();
         this.wallet.chain = EthereumSession.getChain( chainID );
-        return (await this.isChainConnected());
+        return this.isChainConnected();
       }
 
       if( await this.addChain( this.chain ) ){
         const chainID = await this.getWalletChainID();
         this.wallet.chain = EthereumSession.getChain( chainID );
-        if( await this.isChainConnected() )
+        if( this.isChainConnected() )
           return true;
 
         if( await this.setChainID( this.chain.hex ) ){
           const chainID = await this.getWalletChainID();
           this.wallet.chain = EthereumSession.getChain( chainID );
-          return (await this.isChainConnected());
+          return this.isChainConnected();
         }
       }
     }
@@ -238,7 +238,7 @@ class EthereumSession{
     if( !window.ethereum.isConnected() )
       return false;
 
-    if( !(await this.isChainConnected()) )
+    if( !this.isChainConnected() )
       return false;
 
     if( !(await this.hasAccounts()) )

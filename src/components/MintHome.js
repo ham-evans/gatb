@@ -117,16 +117,29 @@ export default function MintHome () {
           }
         });
     }
-    
+
+    function redirect( to ){
+        if( to === 'metamask' ){
+            const link = 'https://metamask.app.link/dapp/'+ window.location.href.substr( 8 );
+            window.location = link;
+        }
+        else if( to === 'trustwallet' ){
+            const link = 'https://link.trustwallet.com/open_url?coin_id=60&url='+ window.location.href;
+            window.location = link;
+        }
+    }
+
     async function signIn() { 
         if ( !window.ethereum ) {
-            setErrorMessage(<div style={{margin: 0, padding: 0}}>
+            setErrorMessage(<div id="providers">
                 <p>No Ethereum interface injected into browser.<br />Other providers:</p>
                 <ul>
-                    <li style={{ cursor: 'pointer' }} onClick={() => connectProvider( CONNECTORS.Walletlink )}>Coinbase Wallet</li>
-                    <li style={{ cursor: 'pointer' }} onClick={() => connectProvider( CONNECTORS.WalletConnect )}>WalletConnect</li>
+                    <li onClick={() => connectProvider( CONNECTORS.Walletlink )}>&bull; Coinbase Wallet</li>
+                    <li onClick={() => redirect( 'metamask' )}>&bull; MetaMask</li>
+                    <li onClick={() => redirect( 'trustwallet' )}>&bull; Trust Wallet</li>
+                    <li onClick={() => connectProvider( CONNECTORS.WalletConnect )}>&bull; WalletConnect</li>
                 </ul>
-            </div>)
+            </div>);
             toggleModal(true);
             return;
         }
@@ -157,6 +170,7 @@ export default function MintHome () {
             }
         }
         catch( error ){
+            alert( error );
             if (error.code === 4001) {
                 setErrorMessage("Sign in to mint Giraffes!")
                 toggleModal(true);
@@ -227,25 +241,15 @@ export default function MintHome () {
 
         //connected
         const price = String(giraffePrice  * howManyGiraffes)
-        
-        const gasBN = await ethereumSession.ethersProvider.getGasPrice()
-        const multiplier = ethers.BigNumber.from(11)
-        const divider = ethers.BigNumber.from(10)
-        const newGasBN = gasBN.mul ( multiplier )
-        const finalGasBN = newGasBN.div(divider) 
-        finalGasBN.toString()
 
-
-        let overrides = {
+        const overrides = {
             from: walletAddress, 
-            value: price,
-            gasPrice: finalGasBN,
+            value: price
         }
 
-        //const gasEstimate = await giraffeWithSigner.estimateGas.mint(howManyGiraffes, overrides)
-        //console.log (gasEstimate * valGasPrice)
-        //console.log()
-        
+        const gasBN = await ethereumSession.contract.estimateGas.mint(howManyGiraffes, overrides);
+        const finalGasBN = gasBN.mul( ethers.BigNumber.from(11) ).div( ethers.BigNumber.from(10) );
+        overrides.gasPrice = finalGasBN.toString();
 
         try{
             await giraffeWithSigner.mint(howManyGiraffes, overrides)
