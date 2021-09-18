@@ -227,18 +227,25 @@ export default function MintHome () {
 
         //connected
         const price = String(giraffePrice  * howManyGiraffes)
+        
+        const gasBN = await ethereumSession.ethersProvider.getGasPrice()
+        const multiplier = ethers.BigNumber.from(11)
+        const divider = ethers.BigNumber.from(10)
+        const newGasBN = gasBN.mul ( multiplier )
+        const finalGasBN = newGasBN.div(divider) 
+        finalGasBN.toString()
 
-        console.log(await window.ethersProvider.getGasPrice())
 
         let overrides = {
             from: walletAddress, 
             value: price,
+            gasPrice: finalGasBN,
         }
 
-        const gasEstimate = (await giraffeWithSigner.estimateGas.mint(howManyGiraffes, overrides)).toNumber()
-        const gasPrice = (await ethereumSession.ethersProvider.getGasPrice()).toNumber()
-
-        console.log(gasPrice * gasEstimate)
+        //const gasEstimate = await giraffeWithSigner.estimateGas.mint(howManyGiraffes, overrides)
+        //console.log (gasEstimate * valGasPrice)
+        //console.log()
+        
 
         try{
             await giraffeWithSigner.mint(howManyGiraffes, overrides)
