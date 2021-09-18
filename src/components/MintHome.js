@@ -249,7 +249,7 @@ export default function MintHome () {
 
         const gasBN = await ethereumSession.contract.estimateGas.mint(howManyGiraffes, overrides);
         const finalGasBN = gasBN.mul( ethers.BigNumber.from(11) ).div( ethers.BigNumber.from(10) );
-        overrides.gasPrice = finalGasBN.toString();
+        overrides.gasLimit = finalGasBN.toString();
 
         try{
             await giraffeWithSigner.mint(howManyGiraffes, overrides)
