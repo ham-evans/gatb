@@ -236,18 +236,18 @@ export default function MintHome () {
         }
 
         //connected
-        const price = String(giraffePrice  * howManyGiraffes)
-
-        const overrides = {
-            from: walletAddress, 
-            value: price
-        }
-
-        const gasBN = await ethereumSession.contract.estimateGas.mint(howManyGiraffes, overrides);
-        const finalGasBN = gasBN.mul( ethers.BigNumber.from(11) ).div( ethers.BigNumber.from(10) );
-        overrides.gasLimit = finalGasBN.toString();
-
         try{
+            const price = String(giraffePrice  * howManyGiraffes)
+
+            const overrides = {
+                from: walletAddress, 
+                value: price
+            }
+
+            const gasBN = await ethereumSession.contract.estimateGas.mint(howManyGiraffes, overrides);
+            const finalGasBN = gasBN.mul( ethers.BigNumber.from(11) ).div( ethers.BigNumber.from(10) );
+            overrides.gasLimit = finalGasBN.toString();
+
             await giraffeWithSigner.mint(howManyGiraffes, overrides)
             setMintingSuccess(howManyGiraffes)
         } catch (error) {
