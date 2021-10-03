@@ -48,12 +48,11 @@ export default function MintHome () {
     const context = useWeb3React();
     const saleMintMax = 20;
 
-    const [signedIn, setSignedIn] = useState(false);
     const [walletAddress, setWalletAddress] = useState(null);
-    let [giraffeContract, setGiraffeContract] = useState(null);
+    const signedIn = !!walletAddress;
+
     const [giraffeWithSigner, setGiraffeWithSigner] = useState(null);
     const [paused, togglePause] = useState(true);
-    const [totalMinted, setTotalMinted] = useState(0);
     const [giraffePrice, setGiraffePrice] = useState(0);
     const [howManyGiraffes, setHowManyGiraffes] = useState(20)
 
@@ -67,7 +66,6 @@ export default function MintHome () {
                 contractAddress: config.CONTRACT,
                 contractABI:     config.ABI
             });
-            //session.connectEthers();
             return session;
         }
         else{
@@ -80,8 +78,8 @@ export default function MintHome () {
             ethereumSession.connectEthers()
                 .then(() => loadContractData())
                 .then(() => {
-                    setSignedIn( true );
-                    setWalletAddress( ethereumSession.wallet.accounts[0] );
+                    if( ethereumSession.hasAccounts() )
+                        setWalletAddress( ethereumSession.wallet.accounts[0] );
                 })
                 .catch( err => {
                     if( err.code === "CALL_EXCEPTION" ){
@@ -156,13 +154,9 @@ export default function MintHome () {
                 }
             }
 
-            const accounts = ethereumSession.wallet.accounts;
-            if (accounts && accounts.length > 0) {
-                setWalletAddress(accounts[0])
-                setSignedIn(true)
+            if (ethereumSession.hasAccounts()) {
+                setWalletAddress(ethereumSession.wallet.accounts[0])
                 await loadContractData()
-            } else {
-                setSignedIn(false)
             }
         }
         catch( error ){
@@ -178,30 +172,19 @@ export default function MintHome () {
     }
 
     async function signOut() {
-        setSignedIn(false)
+        setWalletAddress(null)
     }
 
     async function loadContractData () {
-        if( !window.ethersProvider ){
-            window.ethersProvider = ethereumSession.ethersProvider;
-        }
+        const giraffeContract = ethereumSession.contract;
+        const signer = ethereumSession.ethersProvider.getSigner()
 
-        if( !giraffeContract ){
-            giraffeContract = ethereumSession.contract;
-            if( !giraffeContract ){
-                setGiraffeContract(giraffeContract);
-            }
-        }
-
-        const signer = window.ethersProvider.getSigner()
         const giraffeWithSigner = giraffeContract.connect(signer)
         const salebool = await giraffeContract.paused();
-        const totalMinted = String(await giraffeContract.totalSupply());
         const giraffePrice = await giraffeContract.price();
 
         setGiraffeWithSigner(giraffeWithSigner);
         togglePause(salebool);
-        setTotalMinted(totalMinted);
         setGiraffePrice(giraffePrice);
     }
 
@@ -248,7 +231,8 @@ export default function MintHome () {
             const finalGasBN = gasBN.mul( ethers.BigNumber.from(11) ).div( ethers.BigNumber.from(10) );
             overrides.gasLimit = finalGasBN.toString();
 
-            await giraffeWithSigner.mint(howManyGiraffes, overrides)
+            const txn = await giraffeWithSigner.mint(howManyGiraffes, overrides)
+            await txn.wait();
             setMintingSuccess(howManyGiraffes)
         } catch (error) {
             if (error.error) {

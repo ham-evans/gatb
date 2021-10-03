@@ -23,7 +23,7 @@ export default function About () {
             </div>
             <div className="about__container"  >
                 <h1>About Giraffes At The Bar</h1> 
-                <p>Giraffes At The Bar is a collection of 10,000 Drunken Giraffe NFTs living on the Ethereum blockchain. Each Giraffe NFT is uniquely generated from a pool of 160+ different traits, listed under 8 categories, all of varying rarities! There is also a ‘Custom Giraffe’ series including 5 exclusive pieces of Giraffe art!</p>
+                <p>Giraffes At The Bar is a collection of 2,500 Drunken Giraffe NFTs living on the Ethereum blockchain. Each Giraffe NFT is uniquely generated from a pool of 160+ different traits, listed under 8 categories, all of varying rarities! There is also a ‘Custom Giraffe’ series including 5 exclusive pieces of Giraffe art!</p>
                 <p>Apart from showcasing our unique art style, the main goal of Giraffes at the Bar is to create value for all Giraffe NFT owners, who will be able to reap the rewards from the future utility provided by the team (see our roadmap). At the heart of our project is a desire to grow an inclusive and thriving community.</p>
             </div>
         </div>

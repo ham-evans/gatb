@@ -20,7 +20,7 @@ export default function Info () {
                         Main Drop: Saturday 18th of September 10am PT
                     </li>
                     <li>
-                        Total number of Giraffe NFTs: 10,000
+                        Total number of Giraffe NFTs: 2,500
                     </li>
                     <li>
                         Total number of Giraffe NFTs withheld: 55 (giveaways and team)
